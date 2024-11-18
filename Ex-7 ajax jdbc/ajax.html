@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Student Details</title>
+    <script>
+        function getStudentDetails(regNo) {
+            if (regNo === "") {
+                document.getElementById("details").innerHTML = "Select a student to view details.";
+                return;
+            }
+
+            const xhttp = new XMLHttpRequest();
+
+            xhttp.onreadystatechange = function () {
+                if (this.readyState === 4 && this.status === 200) {
+                    document.getElementById("details").innerHTML = this.responseText;
+                }
+            };
+
+            xhttp.open("GET", "StudentDetailsServlet?reg_no=" + regNo, true);
+            xhttp.send();
+        }
+    </script>
+</head>
+<body>
+    <h1>Student Details Viewer</h1>
+    <label for="regNo">Select Registration Number:</label>
+    <select id="regNo" onchange="getStudentDetails(this.value)">
+        <option value="">-- Select Registration Number --</option>
+        <option value="REG001">REG001</option>
+        <option value="REG002">REG002</option>
+        <option value="REG003">REG003</option>
+        <option value="REG004">REG004</option>
+        <option value="REG005">REG005</option>
+    </select>
+    <div id="details" style="margin-top: 20px; border: 1px solid #ccc; padding: 10px;">
+        Select a student to view details.
+    </div>
+</body>
+</html>
