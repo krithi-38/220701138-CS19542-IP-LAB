@@ -1,1 +1,0 @@
-Welcome to REC! This is data retrieved from a TXT file using XMLHttpRequest.
