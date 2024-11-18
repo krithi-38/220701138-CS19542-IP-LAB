@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Student Name Suggestions</title>
+    <style>
+        #suggestions {
+            border: 1px solid #ccc;
+            max-width: 300px;
+            margin-top: 5px;
+            padding: 10px;
+            background-color: #f9f9f9;
+        }
+
+        #suggestions div {
+            padding: 5px;
+            cursor: pointer;
+        }
+
+        #suggestions div:hover {
+            background-color: #e0e0e0;
+        }
+    </style>
+    <script>
+        function getSuggestions(str) {
+            if (str.length === 0) {
+                document.getElementById("suggestions").innerHTML = "";
+                return;
+            }
+
+            const xhttp = new XMLHttpRequest();
+
+            // Handle the response
+            xhttp.onreadystatechange = function () {
+                if (this.readyState === 4 && this.status === 200) {
+                    document.getElementById("suggestions").innerHTML = this.responseText;
+                }
+            };
+
+            // Send the request to the servlet
+            xhttp.open("GET", "StudentSuggestionServlet?query=" + str, true);
+            xhttp.send();
+        }
+
+        function fillInput(value) {
+            document.getElementById("studentInput").value = value;
+            document.getElementById("suggestions").innerHTML = "";
+        }
+    </script>
+</head>
+<body>
+    <h1>Student Name Suggestion</h1>
+    <label for="studentInput">Enter Student Name:</label><br>
+    <input type="text" id="studentInput" onkeyup="getSuggestions(this.value)" autocomplete="off">
+    <div id="suggestions"></div>
+</body>
+</html>
