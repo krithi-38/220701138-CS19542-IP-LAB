@@ -1,0 +1,240 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Course Registration</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background: linear-gradient(to right, #ece9e6, #ffffff);
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+
+        .container {
+            background-color: #f4f4f9;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
+            max-width: 500px;
+            width: 100%;
+        }
+
+        h1 {
+            text-align: center;
+            color: #333;
+            margin-bottom: 20px;
+        }
+
+        label {
+            display: block;
+            color: #333;
+            font-weight: bold;
+            margin-top: 15px;
+        }
+
+        input[type="text"],
+        input[type="email"],
+        input[type="number"],
+        textarea,
+        select {
+            width: 100%;
+            padding: 8px;
+            margin-top: 5px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            box-sizing: border-box;
+        }
+
+        input[type="submit"] {
+            background-color: #333;
+            color: white;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            margin-top: 20px;
+            width: 100%;
+        }
+
+        input[type="submit"]:hover {
+            background-color: #555;
+        }
+
+        .error {
+            color: red;
+            font-size: 0.9em;
+            margin-left: 10px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Course Registration Form</h1>
+        <form id="registrationForm" onsubmit="return validateForm()">
+            <label>
+                Student Name: 
+                <input type="text" id="student_name" name="student_name">
+                <span class="error" id="nameError"></span>
+            </label>
+            <label>
+                Roll No: 
+                <input type="text" id="rollno" name="rollno">
+                <span class="error" id="rollnoError"></span>
+            </label>
+            <label>
+                Gender:
+                <select id="gender" name="gender">
+                    <option value="">Select</option>
+                    <option value="Male">Male</option>
+                    <option value="Female">Female</option>
+                    <option value="Other">Other</option>
+                </select>
+                <span class="error" id="genderError"></span>
+            </label>
+            <label>
+                Year:
+                <input type="number" id="year" name="year">
+                <span class="error" id="yearError"></span>
+            </label>
+            <label>
+                Department:
+                <input type="text" id="department" name="department">
+                <span class="error" id="departmentError"></span>
+            </label>
+            <label>
+                Section:
+                <input type="text" id="section" name="section">
+                <span class="error" id="sectionError"></span>
+            </label>
+            <label>
+                Mobile No:
+                <input type="text" id="mobile_no" name="mobile_no">
+                <span class="error" id="mobileError"></span>
+            </label>
+            <label>
+                E-Mail ID:
+                <input type="email" id="email" name="email">
+                <span class="error" id="emailError"></span>
+            </label>
+            <label>
+                Address:
+                <textarea id="address" name="address"></textarea>
+                <span class="error" id="addressError"></span>
+            </label>
+            <label>
+                City:
+                <input type="text" id="city" name="city">
+                <span class="error" id="cityError"></span>
+            </label>
+            <label>
+                Country:
+                <input type="text" id="country" name="country">
+                <span class="error" id="countryError"></span>
+            </label>
+            <label>
+                Pincode:
+                <input type="text" id="pincode" name="pincode">
+                <span class="error" id="pincodeError"></span>
+            </label>
+            <input type="submit" value="Register">
+        </form>
+    </div>
+
+    <script>
+        function validateForm() {
+            let valid = true;
+
+            // Clear previous error messages
+            const errors = document.querySelectorAll('.error');
+            errors.forEach(error => error.textContent = '');
+
+            // Validate Student Name
+            const name = document.getElementById('student_name').value.trim();
+            if (name === '') {
+                document.getElementById('nameError').textContent = 'Student name is required';
+                valid = false;
+            }
+
+            // Validate Roll No
+            const rollno = document.getElementById('rollno').value.trim();
+            if (rollno === '') {
+                document.getElementById('rollnoError').textContent = 'Roll No is required';
+                valid = false;
+            }
+
+            // Validate Gender
+            const gender = document.getElementById('gender').value;
+            if (gender === '') {
+                document.getElementById('genderError').textContent = 'Please select your gender';
+                valid = false;
+            }
+
+            // Validate Year
+            const year = document.getElementById('year').value.trim();
+            if (year === '' || isNaN(year) || year <= 0) {
+                document.getElementById('yearError').textContent = 'Please enter a valid year';
+                valid = false;
+            }
+
+            // Validate Department
+            const department = document.getElementById('department').value.trim();
+            if (department === '') {
+                document.getElementById('departmentError').textContent = 'Department is required';
+                valid = false;
+            }
+
+            // Validate Section
+            const section = document.getElementById('section').value.trim();
+            if (section === '') {
+                document.getElementById('sectionError').textContent = 'Section is required';
+                valid = false;
+            }
+
+            // Validate Mobile No
+            const mobile_no = document.getElementById('mobile_no').value.trim();
+            const mobileRegex = /^[6-9]\d{9}$/;
+            if (!mobileRegex.test(mobile_no)) {
+                document.getElementById('mobileError').textContent = 'Please enter a valid 10-digit mobile number';
+                valid = false;
+            }
+
+            // Validate E-Mail ID
+            const email = document.getElementById('email').value.trim();
+            if (email === '') {
+                document.getElementById('emailError').textContent = 'Email is required';
+                valid = false;
+            }
+
+            // Validate Address
+            const address = document.getElementById('address').value.trim();
+            if (address === '') {
+                document.getElementById('addressError').textContent = 'Address is required';
+                valid = false;
+            }
+
+            // Validate City
+            const city = document.getElementById('city').value.trim();
+            if (city === '') {
+                document.getElementById('cityError').textContent = 'City is required';
+                valid = false;
+            }
+
+            // Validate Pincode
+            const pincode = document.getElementById('pincode').value.trim();
+            const pincodeRegex = /^\d{6}$/;
+            if (!pincodeRegex.test(pincode)) {
+                document.getElementById('pincodeError').textContent = 'Please enter a valid 6-digit pincode';
+                valid = false;
+            }
+
+            return valid;
+        }
+    </script>
+</body>
+</html>
