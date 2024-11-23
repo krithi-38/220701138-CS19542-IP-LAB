@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Bubble Popping Game</title>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <style>
+        body {
+            margin: 0;
+            overflow: hidden;
+            background-color: #f0f8ff;
+            font-family: Arial, sans-serif;
+        }
+        .bubble {
+            position: absolute;
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-size: 20px;
+            font-weight: bold;
+            color: white;
+        }
+    </style>
+</head>
+<body>
+    <script >
+      $(document).ready(function () {
+    // Screen dimensions accounting for browser space
+    var width = screen.width - 100;
+    var height = screen.height - 200;
+
+    // Generate random alphabet bubble
+    function createBubble() {
+        var randomChar = String.fromCharCode(65 + Math.floor(Math.random() * 26)); // A-Z
+        var randomX = Math.random() * width; // Random X position
+        var randomY = Math.random() * height; // Random Y position
+        var randomColor = '#' + Math.floor(Math.random() * 16777215).toString(16); // Random color
+
+        // Create bubble div
+        var bubble = $('<div>')
+            .addClass('bubble')
+            .css({
+                backgroundColor: randomColor,
+                top: randomY + 'px',
+                left: randomX + 'px',
+            })
+            .text(randomChar)
+            .attr('data-char', randomChar);
+
+        $('body').append(bubble);
+
+        // Remove bubble after 5 seconds
+        setTimeout(() => {
+            bubble.fadeOut(500, function () {
+                $(this).remove();
+            });
+        }, 5000);
+    }
+
+    // Generate bubbles every 2 seconds
+    setInterval(createBubble, 2000);
+
+    // Handle keypress to "pop" bubble
+    $(document).keypress(function (event) {
+        var keyPressed = String.fromCharCode(event.which).toUpperCase();
+        $('.bubble').each(function () {
+            if ($(this).attr('data-char') === keyPressed) {
+                $(this).fadeOut(200, function () {
+                    $(this).remove();
+                });
+            }
+        });
+    });
+});
+
+    </script>
+</body>
+</html>
